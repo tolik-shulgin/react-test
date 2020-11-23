@@ -74,7 +74,7 @@ if ( ! empty( $_POST['fname'] ) && ! empty( $_POST['lastname'] ) &&
 
 	echo json_encode(array(
         "sent" => true,
-        "message" => 'great JOB!'
+        "message" => 'תודה על ההרשמה! דוגמית בדרך אליך..'
 	));
 
    }else{

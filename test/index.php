@@ -24,25 +24,28 @@
 <div class="product-image">
     <img src="/test/src/pack.png" alt="pack" />
 </div>
-<div class="center-text">
-    <p class="yellow-text">הפכנו את כדור המגנזיום לגרגירים</p>
-    <p class="w-big-text">כדי שתיקחו את זה בקלות</p>
-    <div class="bottom-text">
-        <p>גרגירי מגנזיום להקלה על התכווצות שרירים,
-        קל לנטילה, נמס בפה, בטעם לימון עדין.</p>
-    </div>
-    <div class="icons-wrapper">
-        <img src="/test/src/icon1.png" alt="icon-01" />
-        <img src="/test/src/icon2.png" alt="icon-01" />
-        <img src="/test/src/icon3.png" alt="icon-01" />
-        <img src="/test/src/icon4.png" alt="icon-01" />
+<div class="mob">
+<div class="mob_product-image">
+    <img src="/test/src/pack_mob.png" alt="pack" />
+</div>
+    <div class="center-text">
+        <img src="/test/src/logo.png" alt="logo" class="logo mob">
+        <p class="yellow-text">הפכנו את כדור המגנזיום לגרגירים</p>
+        <p class="w-big-text">כדי שתיקחו את זה בקלות</p>
+        <div class="bottom-text">
+            <p>גרגירי מגנזיום להקלה על התכווצות שרירים,
+            קל לנטילה, נמס בפה, בטעם לימון עדין.</p>
+        </div>
+        <div class="icons-wrapper">
+            <img src="/test/src/icon1.png" alt="icon-01" />
+            <img src="/test/src/icon2.png" alt="icon-01" />
+            <img src="/test/src/icon3.png" alt="icon-01" />
+            <img src="/test/src/icon4.png" alt="icon-01" />
+        </div>
     </div>
 </div>
 <div class="form-wrapper">
 <img src="/test/src/logo.png" alt="logo" class="logo">
-    <h2>לקבלת דוגמית חינם</h2>
-    <p>מלאו את הפרטים</p>
-    <div><span>*</span>שדה חובה</div>
     <div id='root'></div>
 </div>
 <footer></footer>
@@ -70,7 +73,6 @@ class App extends React.Component {
 }
 
 class ContactForm extends React.Component {
-    // const mailsent = false;
     state = {
         fname: '',
         lastname: '',
@@ -80,7 +82,7 @@ class ContactForm extends React.Component {
         homenum: '',
         city: '',
         postalcode: '',
-        // mailSent: '',
+        mailSent: '',
     }
 
     handleFormSubmit( event ) {
@@ -91,8 +93,8 @@ class ContactForm extends React.Component {
     }
 
     validateField(fieldName, value) {
-        console.log(fieldName);
-        console.log(value);
+        // console.log(fieldName);
+        // console.log(value);
         if( fieldName == 'fname' && value.length <= 1 ){
             this.setState({ namenotvalid: true });
         }else if( fieldName == 'fname' && value.length > 1 ){
@@ -107,7 +109,7 @@ class ContactForm extends React.Component {
 
 setStatus = e => {
     // let this;
-    console.log(this);
+    // console.log(this);
     // this.setState({ phonenumer: e.target.value }
 }
 
@@ -120,7 +122,8 @@ handleChange(evt) {
     handleFormSubmit = e => {
         e.preventDefault();
         const API_PATH = 'http://briday.local/test/mail_api.php';
-        const mailsent = false;
+        let mailSent = null;
+        let message = null;
         axios({
             method: 'post',
             url: `${API_PATH}`,
@@ -141,8 +144,11 @@ handleChange(evt) {
     };
 
     render(){
-        return (
+        return !this.state.mailSent ? (
             <form action="#" className={ this.state.mailSent ? "form-send" : "" }>
+            <h2>לקבלת דוגמית חינם</h2>
+            <p>מלאו את הפרטים</p>
+            <div><span>*</span>שדה חובה</div>
             <div>{this.state.error}</div>
                 <div class="form-row mb-4">
                     <div class="col">
@@ -199,11 +205,15 @@ handleChange(evt) {
                     </div>
                 </div>
                 <input type="submit" onClick={ e => this.handleFormSubmit(e) } value="להרשמה וקבלת דוגמית <" />
-                <div>
-                    <div>{this.state.message}</div>
-                </div>
             </form >
-        );
+        ):
+        (
+            <div class="thanks_text">
+                <img src="/test/src/v_icon.png" />
+                <p>{this.state.message}</p>
+                <img src="/test/src/thank_you_pack.png" />
+            </div>
+        )
     }
 }
 
